@@ -6,39 +6,38 @@ import (
 )
 
 type Node struct {
-	next  *Node
-	prev  *Node
-	Data int 
+	next *Node
+	prev *Node
+	Data int
 }
 
 type List struct {
-	len int 
-	head  *Node
-	tail  *Node
+	len  int
+	head *Node
+	tail *Node
 }
 
 func (l *List) Print() {
-	for tmp, i := l.head, l.len; i > 0; tmp, i = tmp.next, i-1 {
+	for tmp := l.head; tmp != nil; tmp = tmp.next {
 		fmt.Printf("Value %d, Prev: %v, Next: %v \n", tmp.Data, tmp.prev, tmp.next)
 	}
 
 }
 
 func (l *List) Len() {
-	return l.len
 	fmt.Printf("Length %d \n", l.len)
 }
 
 func (l *List) Find(elem int) *Node {
 	if l.head != nil {
-		for tmp := l.head; tmp != l.tail; tmp = tmp.next {
+		for tmp := l.head; tmp != nil; tmp = tmp.next {
 			if tmp.Data == elem {
-				fmt.Printf("Element find: Value %d, Prev %v, Next %v \n", tmp.Data, tmp.prev, tmp.next)
-				break
+				return tmp
 			}
 		}
 	}
-	fmt.Println("Element not find")	
+	fmt.Println("Element not find")
+	return nil
 }
 
 func (l *List) PushBack(node *Node) {
@@ -122,7 +121,10 @@ func main() {
 
 	l.Print()
 
-	l.Find(4)
+	findChislo := l.Find(1)
+	if findChislo != nil {
+		fmt.Printf("Element find: Value %d, Prev %v, Next %v \n", findChislo.Data, findChislo.prev.Data, findChislo.next.Data)
+	}
 
 	fmt.Println("\nPopBack")
 
